@@ -1,0 +1,25 @@
+name: Test Build
+
+on: [push]
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt-get install portaudio19-dev
+      - name: Check PortAudio
+        id: vars
+        run: echo ::set-output name=version::$(cat /usr/include/portaudio.h)
+      - name: Test output
+        run: echo ${{ steps.vars.outputs.version }}
+      
+        
+  mac:
+    runs-on: macos-latest
+    steps:
+      - run: brew install portaudio
+      - name: Check PortAudio
+        id: vars
+        run: echo ::set-output name=version::$(cat /usr/local/include/portaudio.h)
+      - name: Test output
+        run: echo ${{ steps.vars.outputs.version }}
